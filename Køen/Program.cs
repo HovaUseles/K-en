@@ -25,7 +25,7 @@ namespace Køen
             newFile.FileSize = rand.Next(1000, 50000);
 
             Console.WriteLine($"Found your file C:\\PrintableFiles\\{newFile.FileName}.{newFile.FileType}");
-            Console.WriteLine("Is this your file?\n1.\nYes 2. No\n");
+            Console.WriteLine("Is this your file?\n1. Yes 2. No\n");
             int input = int.Parse(Console.ReadLine());
             switch (input)
             {
@@ -50,14 +50,35 @@ namespace Køen
             string inputName = Console.ReadLine();
             Console.WriteLine("Write file type.");
             string inputType = Console.ReadLine();
-            printQueue = new Queue<PrintJob>(printQueue.Where(job => (job.FileName != inputName && job.FileType != inputType)));
-            Console.WriteLine($"file {inputName}.{inputType} deleted.");
+
+            Console.WriteLine($"Found your file C:\\PrintableFiles\\{inputName}.{inputType}");
+            Console.WriteLine("Is this your file?\n1. Yes 2. No\n");
+            int input = int.Parse(Console.ReadLine());
+            switch (input)
+            {
+                case 1:
+                    Console.WriteLine($"file {inputName}.{inputType} deleted.");
+                    printQueue = new Queue<PrintJob>(printQueue.Where(job => (job.FileName != inputName && job.FileType != inputType)));
+                    break;
+                case 2:
+                    Console.WriteLine("File not deleted. Returning to main menu.");
+                    break;
+                default:
+                    Console.WriteLine("Your input did not match a option. Returning to main menu.");
+                    break;
+            }
             Console.ReadKey();
         }
         static void ItemNumber()
         {
             Console.Clear();
             Console.WriteLine($"The number of jobs in the queue: {printQueue.Count()}");
+            Console.WriteLine();
+            foreach (PrintJob item in printQueue)
+            {
+                Console.WriteLine(String.Format("{0}.{1}, {2}kb.", item.FileName, item.FileType, item.FileSize));
+                Console.WriteLine();
+            }
             Console.ReadKey();
         }
         static void MinMax()
@@ -76,7 +97,7 @@ namespace Køen
             {
                 if (filename == item.FileName)
                 {
-                    Console.WriteLine(item.FileName + "found.");
+                    Console.WriteLine(String.Format("{0}.{1}, {2}kb. was found", item.FileName, item.FileType, item.FileSize));
                 }
             }
             Console.ReadKey();
@@ -87,15 +108,16 @@ namespace Køen
             foreach (PrintJob item in printQueue)
             {
                 Console.Clear();
-                Console.WriteLine(String.Format("{0}.{1}, {2}kb. Is now being printed",item.FileName, item.FileType, item.FileSize));
-                System.Threading.Thread.Sleep(2000);
-                Console.WriteLine(".");
-                System.Threading.Thread.Sleep(2000);
-                Console.WriteLine("..");
-                System.Threading.Thread.Sleep(2000);
-                Console.WriteLine("...");
-                System.Threading.Thread.Sleep(2000);
+                Console.WriteLine(String.Format("{0}.{1}, {2}kb. Is now being printed", item.FileName, item.FileType, item.FileSize));
+                for (int i = 0; i < 30; i++)
+                {
+                    System.Threading.Thread.Sleep(150);
+                    Console.Write(".");
+
+                }
+                Console.WriteLine();
                 Console.WriteLine("Print done.");
+                System.Threading.Thread.Sleep(1000);
                 Console.WriteLine();
             }
             Console.ReadKey();
@@ -111,19 +133,19 @@ namespace Køen
             job1.FileSize = rand.Next(1000, 50000);
             printQueue.Enqueue(job1);
             PrintJob job2 = new PrintJob();
-            job1.FileName = "Movies";
-            job1.FileType = "txt";
-            job1.FileSize = rand.Next(1000, 50000);
+            job2.FileName = "Movies";
+            job2.FileType = "txt";
+            job2.FileSize = rand.Next(1000, 50000);
             printQueue.Enqueue(job2);
             PrintJob job3 = new PrintJob();
-            job1.FileName = "bomb manual";
-            job1.FileType = "txt";
-            job1.FileSize = rand.Next(1000, 50000);
+            job3.FileName = "bomb manual";
+            job3.FileType = "txt";
+            job3.FileSize = rand.Next(1000, 50000);
             printQueue.Enqueue(job3);
             PrintJob job4 = new PrintJob();
-            job1.FileName = "Switch Configuration";
-            job1.FileType = "txt";
-            job1.FileSize = rand.Next(1000, 50000);
+            job4.FileName = "Switch Configuration";
+            job4.FileType = "txt";
+            job4.FileSize = rand.Next(1000, 50000);
             printQueue.Enqueue(job4);
 
             // Creating the menu
