@@ -105,10 +105,27 @@ namespace Køen
 
         static void ShowAllItems()
         {
-            foreach (PrintJob item in printQueue)
+            //foreach (PrintJob item in printQueue)
+            //{
+            //    Console.Clear();
+            //    Console.WriteLine(String.Format("{0}.{1}, {2}kb. Is now being printed", item.FileName, item.FileType, item.FileSize));
+            //    for (int i = 0; i < 30; i++)
+            //    {
+            //        System.Threading.Thread.Sleep(150);
+            //        Console.Write(".");
+
+            //    }
+            //    Console.WriteLine();
+            //    Console.WriteLine("Print done.");
+
+            //    System.Threading.Thread.Sleep(1000);
+            //    Console.WriteLine();
+            //}
+            while (printQueue.Count() > 0)
             {
                 Console.Clear();
-                Console.WriteLine(String.Format("{0}.{1}, {2}kb. Is now being printed", item.FileName, item.FileType, item.FileSize));
+                PrintJob toBePrinted = printQueue.Dequeue();
+                Console.WriteLine(String.Format("{0}.{1}, {2}kb. Is now being printed", toBePrinted.FileName, toBePrinted.FileType, toBePrinted.FileSize));
                 for (int i = 0; i < 30; i++)
                 {
                     System.Threading.Thread.Sleep(150);
@@ -117,6 +134,7 @@ namespace Køen
                 }
                 Console.WriteLine();
                 Console.WriteLine("Print done.");
+
                 System.Threading.Thread.Sleep(1000);
                 Console.WriteLine();
             }
